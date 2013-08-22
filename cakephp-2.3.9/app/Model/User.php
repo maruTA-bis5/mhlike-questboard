@@ -3,6 +3,7 @@ App::uses('AuthComponent', 'Controller/Component');
 class User extends AppModel 
 {
 	public $useTable = 'user';
+	public $displayField = 'username';
 
 	public function beforeSave($options = array())
 	{
