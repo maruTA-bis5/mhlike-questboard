@@ -17,9 +17,9 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 ?>
-<div class="<?php echo $pluralVar; ?> view">
+<div class="<?php echo $pluralVar; ?> view col-lg-10">
 <h2><?php echo __d('cake', 'View %s', $singularHumanName); ?></h2>
-	<dl>
+	<dl class="dl-horizontal">
 <?php
 $i = 0;
 foreach ($scaffoldFields as $_field) {
@@ -47,7 +47,7 @@ foreach ($scaffoldFields as $_field) {
 ?>
 	</dl>
 </div>
-<div class="actions">
+<div class="actions col-lg-2">
 	<h3><?php echo __d('cake', 'Actions'); ?></h3>
 	<ul>
 <?php

@@ -17,64 +17,8 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 ?>
-<div class="<?php echo $pluralVar; ?> index">
-<h2><?php echo $pluralHumanName; ?></h2>
-<table cellpadding="0" cellspacing="0">
-<tr>
-<?php foreach ($scaffoldFields as $_field): ?>
-	<th><?php echo $this->Paginator->sort($_field); ?></th>
-<?php endforeach; ?>
-	<th><?php echo __d('cake', 'Actions'); ?></th>
-</tr>
-<?php
-foreach (${$pluralVar} as ${$singularVar}):
-	echo '<tr>';
-		foreach ($scaffoldFields as $_field) {
-			$isKey = false;
-			if (!empty($associations['belongsTo'])) {
-				foreach ($associations['belongsTo'] as $_alias => $_details) {
-					if ($_field === $_details['foreignKey']) {
-						$isKey = true;
-						echo '<td>' . $this->Html->link(${$singularVar}[$_alias][$_details['displayField']], array('controller' => $_details['controller'], 'action' => 'view', ${$singularVar}[$_alias][$_details['primaryKey']])) . '</td>';
-						break;
-					}
-				}
-			}
-			if ($isKey !== true) {
-				echo '<td>' . h(${$singularVar}[$modelClass][$_field]) . '</td>';
-			}
-		}
 
-		echo '<td class="actions">';
-		echo $this->Html->link(__d('cake', 'View'), array('action' => 'view', ${$singularVar}[$modelClass][$primaryKey]));
-		echo ' ' . $this->Html->link(__d('cake', 'Edit'), array('action' => 'edit', ${$singularVar}[$modelClass][$primaryKey]));
-		echo ' ' . $this->Form->postLink(
-			__d('cake', 'Delete'),
-			array('action' => 'delete', ${$singularVar}[$modelClass][$primaryKey]),
-			null,
-			__d('cake', 'Are you sure you want to delete # %s?', ${$singularVar}[$modelClass][$primaryKey])
-		);
-		echo '</td>';
-	echo '</tr>';
-
-endforeach;
-
-?>
-</table>
-	<p><?php
-	echo $this->Paginator->counter(array(
-		'format' => __d('cake', 'Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?></p>
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __d('cake', 'previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__d('cake', 'next') .' >', array(), null, array('class' => 'next disabled'));
-	?>
-	</div>
-</div>
-<div class="actions">
+<div class="actions col-md-2">
 	<h3><?php echo __d('cake', 'Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__d('cake', 'New %s', $singularHumanName), array('action' => 'add')); ?></li>
@@ -101,5 +45,66 @@ endforeach;
 			}
 		}
 ?>
+	</ul>
+</div>
+
+
+<div class="<?php echo $pluralVar; ?> index col-md-10">
+<h2><?php echo $pluralHumanName; ?></h2>
+<table class="table table-striped">
+<thead>
+	<tr>
+	<?php foreach ($scaffoldFields as $_field): ?>
+		<th><?php echo $this->Paginator->sort($_field); ?></th>
+	<?php endforeach; ?>
+		<th><?php echo __d('cake', 'Actions'); ?></th>
+	</tr>
+</thead>
+<tbody>
+	<?php
+	foreach (${$pluralVar} as ${$singularVar}):
+		echo '<tr>';
+			foreach ($scaffoldFields as $_field) {
+				$isKey = false;
+				if (!empty($associations['belongsTo'])) {
+					foreach ($associations['belongsTo'] as $_alias => $_details) {
+						if ($_field === $_details['foreignKey']) {
+							$isKey = true;
+							echo '<td>' . $this->Html->link(${$singularVar}[$_alias][$_details['displayField']], array('controller' => $_details['controller'], 'action' => 'view', ${$singularVar}[$_alias][$_details['primaryKey']])) . '</td>';
+							break;
+						}
+					}
+				}
+				if ($isKey !== true) {
+					echo '<td>' . h(${$singularVar}[$modelClass][$_field]) . '</td>';
+				}
+			}
+
+			echo '<td class="actions">';
+			echo $this->Html->link(__d('cake', 'View'), array('action' => 'view', ${$singularVar}[$modelClass][$primaryKey]));
+			echo ' ' . $this->Html->link(__d('cake', 'Edit'), array('action' => 'edit', ${$singularVar}[$modelClass][$primaryKey]));
+			echo ' ' . $this->Form->postLink(
+				__d('cake', 'Delete'),
+				array('action' => 'delete', ${$singularVar}[$modelClass][$primaryKey]),
+				null,
+				__d('cake', 'Are you sure you want to delete # %s?', ${$singularVar}[$modelClass][$primaryKey])
+			);
+			echo '</td>';
+		echo '</tr>';
+
+	endforeach;
+
+	?>
+</tbody>
+</table>
+	<p><?php
+	echo $this->Paginator->counter(array(
+		'format' => __d('cake', 'Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
+	));
+	?></p>
+	<ul class="pagination">
+		<li><?php echo $this->Paginator->prev('< ' . __d('cake', 'previous'), array(), null, array('class' => 'prev disabled'));?></li>
+<?php echo $this->Paginator->numbers(array('tag' => 'li'));?>
+<li><?php echo $this->Paginator->next(__d('cake', 'next') .' >', array(), null, array('class' => 'next disabled'));?></li>
 	</ul>
 </div>

@@ -17,14 +17,33 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 ?>
-<div class="<?php echo $pluralVar; ?> form">
+<div class="<?php echo $pluralVar; ?> form col-lg-10">
 <?php
 	echo $this->Form->create();
 	echo $this->Form->inputs($scaffoldFields, array('created', 'modified', 'updated'));
-	echo $this->Form->end(__d('cake', 'Submit'));
+	echo $this->Form->end(array('label'=>__d('cake', 'Submit'), 'class' => 'btn btn-default'));
 ?>
 </div>
-<div class="actions">
+<script>
+$(document).ready(function() {// set classes
+	$("div.form form input").addClass("form-control");
+	$("div.form form select").addClass("form-control");
+	$("div.form form textarea").addClass("form-control");
+	$("div.form form input[type=checkbox]").removeClass("form-control");
+	$("div.form form input[type=submit]").removeClass("form-control");
+});
+$(document).ready(function() {//enable datetime picker
+	$("div.input.datetime").children().hide();
+	$("div.input.datetime label").show();
+	$("div.input.datetime").append('<input id="QuestExpire" type="text">');
+	$("#QuestExpire").datetimepicker({
+		controlType: "slider",
+			dateFormat: "yy/mm/dd",
+			timeFormat: "HH:mm"
+	});
+});
+</script>
+<div class="actions col-lg-2">
 	<h3><?php echo __d('cake', 'Actions'); ?></h3>
 	<ul>
 <?php if ($this->request->action !== 'add'): ?>
